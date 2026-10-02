@@ -1,0 +1,128 @@
+# Root Git Ignore for the repository
+# Single source of truth for repo-wide and app-specific ignores
+
+# Dependency directories
+**/node_modules/
+
+# Build outputs
+**/dist/
+**/dist-ssr/
+**/build/
+**/coverage/
+
+# Vite / tooling caches
+**/.vite/
+.eslintcache
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+.history/
+.vs/
+*.code-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Python specific
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/*.egg-info/
+
+# Test exports and temporary files
+**/test_exports/
+**/api_test_exports/
+**/*_sample*.txt
+**/test_upload.txt
+
+# Model files (large binary files)
+**/*.pkl
+**/*.joblib
+**/*.h5
+**/*.pt
+**/*.pth
+**/*.safetensors
+
+# Training datasets and large data files
+**/trainingDataset.json
+**/combined_dataset.json
+**/model_test_results.json
+
+# Model checkpoints and training outputs
+**/combined_model_*/
+**/incremental_checkpoints/
+**/checkpoint-*/
+**/trainer_state.json
+
+# Misc
+*.local
+
+# Optional caches and merge leftovers
+**/.cache/
+.pnpm-store/
+
+# Test results and coverage
+**/test-results/
+**/test-results.json
+**/coverage/
+**/*.lcov
+
+# Jest cache
+**/.jest/
+
+# Test dashboard data
+**/test-dashboard-data.json
+.yarn/cache/
+*.orig
+
+# Python specific
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/venv/
+**/env/
+**/.venv/
+**/.env
+**/ENV/
+**/env.bak/
+**/venv.bak/
+**/.pytest_cache/
+**/*.egg-info/
+**/dist/
+**/build/
+**/.coverage
+**/htmlcov/
+**/*.log
+
+# Backend specific
+backend/uploads/
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+backend/config.ini
+backend/secrets.json
+backend/.secrets

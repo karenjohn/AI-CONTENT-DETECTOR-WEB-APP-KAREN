@@ -1,0 +1,203 @@
+/* Alert Components */
+.alert {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.alert-message {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  margin-left: auto;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  line-height: 1;
+}
+
+.alert-close:hover {
+  opacity: 1;
+}
+
+/* Alert Variants */
+.alert-primary {
+  background-color: var(--primary-blue-light);
+  border-color: var(--primary-blue-border);
+  color: var(--primary-blue-dark);
+}
+
+.alert-primary .alert-icon {
+  color: var(--primary-blue-hover);
+}
+
+.alert-success {
+  background-color: var(--success-light);
+  border-color: var(--success-border);
+  color: var(--success-dark);
+}
+
+.alert-success .alert-icon {
+  color: var(--success-color);
+}
+
+.alert-warning {
+  background-color: var(--warning-light);
+  border-color: var(--warning-border);
+  color: var(--warning-dark);
+}
+
+.alert-warning .alert-icon {
+  color: var(--warning-color);
+}
+
+.alert-danger {
+  background-color: var(--error-light);
+  border-color: var(--error-border);
+  color: var(--error-dark);
+}
+
+.alert-danger .alert-icon {
+  color: var(--error);
+}
+
+.alert-info {
+  background-color: var(--info-light);
+  border-color: var(--info-border);
+  color: var(--info-dark);
+}
+
+.alert-info .alert-icon {
+  color: var(--info);
+}
+
+/* Alert with Action */
+.alert-with-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+}
+
+.alert-action {
+  margin-top: 0.75rem;
+  margin-left: auto;
+}
+
+/* Dismissible Alert */
+.alert-dismissible {
+  position: relative;
+  padding-right: 3rem;
+}
+
+.alert-dismissible .alert-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* Alert Group */
+.alert-group {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  width: 100%;
+  max-width: 24rem;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.alert-group .alert {
+  margin-bottom: 0.75rem;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .alert-group {
+    left: 1rem;
+    width: calc(100% - 2rem);
+    max-width: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .alert {
+    background-color: var(--bg-transparent-white-05);
+  }
+  
+  .alert-primary {
+    background-color: var(--primary-blue-dark-mode);
+    color: var(--primary-blue-light-text);
+  }
+  
+  .alert-success {
+    background-color: var(--success-dark-mode);
+    color: var(--success-light-text);
+  }
+  
+  .alert-warning {
+    background-color: var(--warning-dark-mode);
+    color: var(--warning-light-text);
+  }
+  
+  .alert-danger {
+    background-color: var(--error-dark-mode);
+    color: var(--error-light-text);
+  }
+  
+  .alert-info {
+    background-color: var(--info-dark-mode);
+    color: var(--info-light-text);
+  }
+  
+  .alert-close {
+    color: var(--text-transparent-white-70);
+  }
+  
+  .alert-close:hover {
+    color: var(--text-white);
+  }
+}

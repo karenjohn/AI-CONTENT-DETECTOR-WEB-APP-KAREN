@@ -1,0 +1,224 @@
+<svg width="1400" height="1600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: 'Times New Roman', serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .actor-title { font-family: 'Arial', sans-serif; font-size: 14px; font-weight: bold; fill: #000000; }
+      .method-text { font-family: 'Arial', sans-serif; font-size: 12px; fill: #000000; }
+      .note-text { font-family: 'Arial', sans-serif; font-size: 10px; fill: #000000; }
+      .sequence-text { font-family: 'Arial', sans-serif; font-size: 11px; fill: #000000; }
+      .actor-box { fill: #ffffff; stroke: #000000; stroke-width: 2; }
+      .lifeline { stroke: #000000; stroke-width: 1; stroke-dasharray: 5,5; }
+      .message-arrow { stroke: #000000; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+      .return-arrow { stroke: #000000; stroke-width: 1; fill: none; marker-end: url(#arrowhead-small); stroke-dasharray: 3,3; }
+      .activation-box { fill: #f0f0f0; stroke: #000000; stroke-width: 1; }
+      .note-box { fill: #ffffff; stroke: #000000; stroke-width: 1; }
+      .section-line { stroke: #000000; stroke-width: 2; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#000000" />
+    </marker>
+    <marker id="arrowhead-small" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 8 2.5, 0 5" fill="#000000" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="700" y="40" text-anchor="middle" class="title">AI Content Detection System - Sequence Diagram</text>
+  <text x="700" y="65" text-anchor="middle" class="note-text">Method Interactions and Data Flow Analysis</text>
+
+  <!-- Actors/Components -->
+  <rect x="50" y="100" width="120" height="60" class="actor-box" rx="5"/>
+  <text x="110" y="125" text-anchor="middle" class="actor-title">User</text>
+  <text x="110" y="140" text-anchor="middle" class="actor-title">Interface</text>
+
+  <rect x="220" y="100" width="140" height="60" class="actor-box" rx="5"/>
+  <text x="290" y="125" text-anchor="middle" class="actor-title">ContentDetectPage</text>
+  <text x="290" y="140" text-anchor="middle" class="actor-title">(React Component)</text>
+
+  <rect x="410" y="100" width="120" height="60" class="actor-box" rx="5"/>
+  <text x="470" y="125" text-anchor="middle" class="actor-title">API</text>
+  <text x="470" y="140" text-anchor="middle" class="actor-title">Gateway</text>
+
+  <rect x="580" y="100" width="140" height="60" class="actor-box" rx="5"/>
+  <text x="650" y="125" text-anchor="middle" class="actor-title">EnsembleAIDetector</text>
+  <text x="650" y="140" text-anchor="middle" class="actor-title">(Backend)</text>
+
+  <rect x="770" y="100" width="140" height="60" class="actor-box" rx="5"/>
+  <text x="840" y="125" text-anchor="middle" class="actor-title">CNNTextClassifier</text>
+  <text x="840" y="140" text-anchor="middle" class="actor-title">(CNN Model)</text>
+
+  <rect x="960" y="100" width="140" height="60" class="actor-box" rx="5"/>
+  <text x="1030" y="125" text-anchor="middle" class="actor-title">PatternDetector</text>
+  <text x="1030" y="140" text-anchor="middle" class="actor-title">(Rule-based)</text>
+
+  <rect x="1150" y="100" width="120" height="60" class="actor-box" rx="5"/>
+  <text x="1210" y="125" text-anchor="middle" class="actor-title">AuthContext</text>
+  <text x="1210" y="140" text-anchor="middle" class="actor-title">(Authentication)</text>
+
+  <!-- Lifelines -->
+  <line x1="110" y1="160" x2="110" y2="1550" class="lifeline"/>
+  <line x1="290" y1="160" x2="290" y2="1550" class="lifeline"/>
+  <line x1="470" y1="160" x2="470" y2="1550" class="lifeline"/>
+  <line x1="650" y1="160" x2="650" y2="1550" class="lifeline"/>
+  <line x1="840" y1="160" x2="840" y2="1550" class="lifeline"/>
+  <line x1="1030" y1="160" x2="1030" y2="1550" class="lifeline"/>
+  <line x1="1210" y1="160" x2="1210" y2="1550" class="lifeline"/>
+
+  <!-- Section 1: User Authentication -->
+  <line x1="50" y1="200" x2="1350" y2="200" class="section-line"/>
+  <text x="700" y="220" text-anchor="middle" class="actor-title">1. User Authentication Flow</text>
+
+  <!-- Authentication sequence -->
+  <rect x="285" y="240" width="10" height="120" class="activation-box"/>
+  <rect x="1205" y="260" width="10" height="80" class="activation-box"/>
+
+  <line x1="110" y1="250" x2="285" y2="250" class="message-arrow"/>
+  <text x="197" y="245" text-anchor="middle" class="sequence-text">1.1: signIn(email, password)</text>
+
+  <line x1="295" y1="270" x2="1205" y2="270" class="message-arrow"/>
+  <text x="750" y="265" text-anchor="middle" class="sequence-text">1.2: signIn(credentials)</text>
+
+  <rect x="1150" y="290" width="120" height="30" class="note-box" rx="3"/>
+  <text x="1210" y="305" text-anchor="middle" class="note-text">Firebase Authentication</text>
+
+  <line x1="1205" y1="320" x2="295" y2="320" class="return-arrow"/>
+  <text x="750" y="315" text-anchor="middle" class="sequence-text">1.3: return user object</text>
+
+  <line x1="285" y1="340" x2="115" y2="340" class="return-arrow"/>
+  <text x="200" y="335" text-anchor="middle" class="sequence-text">1.4: authentication success</text>
+
+  <!-- Section 2: Content Input -->
+  <line x1="50" y1="380" x2="1350" y2="380" class="section-line"/>
+  <text x="700" y="400" text-anchor="middle" class="actor-title">2. Content Input and Validation</text>
+
+  <rect x="285" y="420" width="10" height="160" class="activation-box"/>
+
+  <line x1="110" y1="430" x2="285" y2="430" class="message-arrow"/>
+  <text x="197" y="425" text-anchor="middle" class="sequence-text">2.1: handleTextChange(text)</text>
+
+  <rect x="220" y="450" width="140" height="30" class="note-box" rx="3"/>
+  <text x="290" y="465" text-anchor="middle" class="note-text">Input validation &amp; state update</text>
+
+  <line x1="110" y1="500" x2="285" y2="500" class="message-arrow"/>
+  <text x="197" y="495" text-anchor="middle" class="sequence-text">2.2: handleFileUpload(file)</text>
+
+  <rect x="220" y="520" width="140" height="30" class="note-box" rx="3"/>
+  <text x="290" y="535" text-anchor="middle" class="note-text">File parsing &amp; text extraction</text>
+
+  <line x1="110" y1="560" x2="285" y2="560" class="message-arrow"/>
+  <text x="197" y="555" text-anchor="middle" class="sequence-text">2.3: handleAnalyze()</text>
+
+  <!-- Section 3: Analysis Process -->
+  <line x1="50" y1="600" x2="1350" y2="600" class="section-line"/>
+  <text x="700" y="620" text-anchor="middle" class="actor-title">3. AI Content Analysis Process</text>
+
+  <rect x="285" y="640" width="10" height="400" class="activation-box"/>
+  <rect x="465" y="660" width="10" height="360" class="activation-box"/>
+  <rect x="645" y="680" width="10" height="320" class="activation-box"/>
+  <rect x="835" y="720" width="10" height="120" class="activation-box"/>
+  <rect x="1025" y="860" width="10" height="120" class="activation-box"/>
+
+  <line x1="295" y1="650" x2="465" y2="650" class="message-arrow"/>
+  <text x="380" y="645" text-anchor="middle" class="sequence-text">3.1: POST /api/analyze</text>
+
+  <line x1="475" y1="670" x2="645" y2="670" class="message-arrow"/>
+  <text x="560" y="665" text-anchor="middle" class="sequence-text">3.2: detect(text)</text>
+
+  <rect x="580" y="690" width="140" height="30" class="note-box" rx="3"/>
+  <text x="650" y="705" text-anchor="middle" class="note-text">Initialize ensemble detection</text>
+
+  <line x1="655" y1="730" x2="835" y2="730" class="message-arrow"/>
+  <text x="745" y="725" text-anchor="middle" class="sequence-text">3.3: predict(text)</text>
+
+  <rect x="770" y="750" width="140" height="50" class="note-box" rx="3"/>
+  <text x="840" y="765" text-anchor="middle" class="note-text">CNN model inference</text>
+  <text x="840" y="780" text-anchor="middle" class="note-text">CNN character encoding</text>
+  <text x="840" y="795" text-anchor="middle" class="note-text">Confidence calculation</text>
+
+  <line x1="835" y1="820" x2="655" y2="820" class="return-arrow"/>
+  <text x="745" y="815" text-anchor="middle" class="sequence-text">3.4: neural_score, confidence</text>
+
+  <line x1="655" y1="870" x2="1025" y2="870" class="message-arrow"/>
+  <text x="840" y="865" text-anchor="middle" class="sequence-text">3.5: analyze_text(text)</text>
+
+  <rect x="960" y="890" width="140" height="50" class="note-box" rx="3"/>
+  <text x="1030" y="905" text-anchor="middle" class="note-text">Pattern analysis</text>
+  <text x="1030" y="920" text-anchor="middle" class="note-text">Linguistic markers</text>
+  <text x="1030" y="935" text-anchor="middle" class="note-text">Style detection</text>
+
+  <line x1="1025" y1="960" x2="655" y2="960" class="return-arrow"/>
+  <text x="840" y="955" text-anchor="middle" class="sequence-text">3.6: pattern_score, features</text>
+
+  <rect x="580" y="980" width="140" height="30" class="note-box" rx="3"/>
+  <text x="650" y="995" text-anchor="middle" class="note-text">Combine predictions</text>
+
+  <line x1="645" y1="1020" x2="475" y2="1020" class="return-arrow"/>
+  <text x="560" y="1015" text-anchor="middle" class="sequence-text">3.7: final_result, confidence</text>
+
+  <line x1="465" y1="1040" x2="295" y2="1040" class="return-arrow"/>
+  <text x="380" y="1035" text-anchor="middle" class="sequence-text">3.8: analysis_response</text>
+
+  <!-- Section 4: Results and Export -->
+  <line x1="50" y1="1080" x2="1350" y2="1080" class="section-line"/>
+  <text x="700" y="1100" text-anchor="middle" class="actor-title">4. Results Display and Export</text>
+
+  <rect x="285" y="1120" width="10" height="200" class="activation-box"/>
+
+  <rect x="220" y="1130" width="140" height="30" class="note-box" rx="3"/>
+  <text x="290" y="1145" text-anchor="middle" class="note-text">Update UI state with results</text>
+
+  <line x1="285" y1="1170" x2="115" y2="1170" class="return-arrow"/>
+  <text x="200" y="1165" text-anchor="middle" class="sequence-text">4.1: display results</text>
+
+  <line x1="110" y1="1200" x2="285" y2="1200" class="message-arrow"/>
+  <text x="197" y="1195" text-anchor="middle" class="sequence-text">4.2: handleExportPDF()</text>
+
+  <rect x="220" y="1220" width="140" height="50" class="note-box" rx="3"/>
+  <text x="290" y="1235" text-anchor="middle" class="note-text">Generate PDF report</text>
+  <text x="290" y="1250" text-anchor="middle" class="note-text">Include analysis details</text>
+  <text x="290" y="1265" text-anchor="middle" class="note-text">Download to user</text>
+
+  <line x1="285" y1="1290" x2="115" y2="1290" class="return-arrow"/>
+  <text x="200" y="1285" text-anchor="middle" class="sequence-text">4.3: export complete</text>
+
+  <!-- Section 5: Feedback -->
+  <line x1="50" y1="1330" x2="1350" y2="1330" class="section-line"/>
+  <text x="700" y="1350" text-anchor="middle" class="actor-title">5. User Feedback Collection</text>
+
+  <rect x="285" y="1370" width="10" height="120" class="activation-box"/>
+  <rect x="465" y="1390" width="10" height="80" class="activation-box"/>
+
+  <line x1="110" y1="1380" x2="285" y2="1380" class="message-arrow"/>
+  <text x="197" y="1375" text-anchor="middle" class="sequence-text">5.1: submitFeedback(rating, comment)</text>
+
+  <line x1="295" y1="1400" x2="465" y2="1400" class="message-arrow"/>
+  <text x="380" y="1395" text-anchor="middle" class="sequence-text">5.2: POST /api/feedback</text>
+
+  <rect x="410" y="1420" width="120" height="30" class="note-box" rx="3"/>
+  <text x="470" y="1435" text-anchor="middle" class="note-text">Store feedback data</text>
+
+  <line x1="465" y1="1450" x2="295" y2="1450" class="return-arrow"/>
+  <text x="380" y="1445" text-anchor="middle" class="sequence-text">5.3: feedback saved</text>
+
+  <line x1="285" y1="1470" x2="115" y2="1470" class="return-arrow"/>
+  <text x="200" y="1465" text-anchor="middle" class="sequence-text">5.4: confirmation message</text>
+
+  <!-- Legend and Notes -->
+  <rect x="50" y="1500" width="1300" height="80" class="note-box" rx="5"/>
+  <text x="700" y="1520" text-anchor="middle" class="actor-title">Sequence Diagram Legend</text>
+  
+  <line x1="100" y1="1540" x2="200" y2="1540" class="message-arrow"/>
+  <text x="250" y="1545" class="sequence-text">Synchronous method call</text>
+  
+  <line x1="400" y1="1540" x2="500" y2="1540" class="return-arrow"/>
+  <text x="550" y="1545" class="sequence-text">Return value/response</text>
+  
+  <rect x="750" y="1530" width="60" height="20" class="activation-box"/>
+  <text x="830" y="1545" class="sequence-text">Active execution period</text>
+  
+  <rect x="1000" y="1530" width="80" height="20" class="note-box"/>
+  <text x="1100" y="1545" class="sequence-text">Process annotation</text>
+
+  <text x="700" y="1570" text-anchor="middle" class="note-text">This diagram illustrates the complete flow from user authentication through content analysis to result export and feedback collection.</text>
+
+</svg>

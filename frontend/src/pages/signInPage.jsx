@@ -1,0 +1,263 @@
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
+import detectIcon from '../assets/icons/detect.svg'
+
+export default function SignInPage() {
+  const navigate = useNavigate()
+  const { signIn, signInWithGoogle, signInWithGitHub, error, clearError } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
+  const [errors, setErrors] = useState({})
+
+  // Real-time field validation
+  const validateField = (name, value) => {
+    const newErrors = { ...errors }
+    
+    switch (name) {
+      case 'email':
+        if (!value) {
+          newErrors.email = 'Please enter your email address'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          newErrors.email = 'Please enter a valid email address'
+        } else {
+          delete newErrors.email
+        }
+        break
+        
+      case 'password':
+        if (!value) {
+          newErrors.password = 'Please enter your password'
+        } else if (value.length < 6) {
+          newErrors.password = 'Password must be at least 6 characters long'
+        } else {
+          delete newErrors.password
+        }
+        break
+    }
+    
+    setErrors(newErrors)
+  }
+
+  // Check if form is valid for button state
+  const isFormValid = () => {
+    return (
+      email &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
+      password &&
+      password.length >= 6 &&
+      Object.keys(errors).length === 0
+    )
+  }
+
+  // Handle email change
+  const handleEmailChange = (e) => {
+    const value = e.target.value
+    setEmail(value)
+    validateField('email', value)
+  }
+
+  // Handle password change
+  const handlePasswordChange = (e) => {
+    const value = e.target.value
+    setPassword(value)
+    validateField('password', value)
+  }
+
+  // Handle form submission
+  async function onSubmit(e) {
+    e.preventDefault()
+    
+    if (!email || !password) {
+      return
+    }
+    
+    setLoading(true)
+    clearError()
+    
+    try {
+      await signIn(email, password)
+      navigate('/content-detect') // Redirect to content detect page on successful login
+    } catch (error) {
+      console.error('Sign in error:', error)
+      // Handle specific Firebase errors with user-friendly messages
+      let errorMessage = 'Something went wrong. Please try again.'
+      
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No account found with this email address. Please check your email or create a new account.'
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password. Please try again or reset your password.'
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Please enter a valid email address.'
+      } else if (error.code === 'auth/user-disabled') {
+        errorMessage = 'This account has been disabled. Please contact support.'
+      } else if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'Too many failed attempts. Please try again later or reset your password.'
+      } else if (error.code === 'auth/network-request-failed') {
+        errorMessage = 'Network error. Please check your connection and try again.'
+      }
+      
+      setErrors({ general: errorMessage })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Handle Google sign in
+  async function handleGoogleSignIn() {
+    setLoading(true)
+    clearError()
+    
+    try {
+      await signInWithGoogle()
+      navigate('/content-detect')
+    } catch (error) {
+      console.error('Google sign in error:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Handle GitHub sign in
+  async function handleGitHubSignIn() {
+    setLoading(true)
+    clearError()
+    
+    try {
+      await signInWithGitHub()
+      navigate('/content-detect')
+    } catch (error) {
+      console.error('GitHub sign in error:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section className="auth-section">
+      <div className="auth-bg" aria-hidden="true" />
+      <button
+        type="button"
+        className="btn btn-ghost auth-back"
+        onClick={() => navigate(-1)} // Navigate back to previous page
+        aria-label="Go back"
+      >
+        <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+        <span>Back</span>
+      </button>
+      <div className="auth-container">
+        <div className="auth-card glass-card">
+          <div className="auth-header">
+            <div className="auth-logo" aria-hidden>
+              <img src={detectIcon} alt="" width="24" height="24" />
+            </div>
+            <h1 className="auth-title">Welcome back</h1>
+            <p className="auth-subtitle">Sign in to continue to your dashboard</p>
+          </div>
+
+          <form className="auth-form" onSubmit={onSubmit}>
+            <div className="form-group">
+              <label className="input-label" htmlFor="email">Email</label>
+              <div className={`input-field ${errors.email ? 'error' : ''}`}>
+                <i className="fa-regular fa-envelope" aria-hidden="true"></i>
+                <input
+                  id="email"
+                  type="email"
+                  className="input"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                />
+              </div>
+              {errors.email && <p className="error-message">{errors.email}</p>}
+            </div>
+
+            <div className="form-group">
+              <label className="input-label" htmlFor="password">Password</label>
+              <div className={`input-field ${errors.password ? 'error' : ''}`}>
+                <i className="fa-solid fa-lock" aria-hidden="true"></i>
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  className="input"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => setShowPassword((s) => !s)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`} aria-hidden="true"></i>
+                </button>
+              </div>
+              {errors.password && <p className="error-message">{errors.password}</p>}
+            </div>
+
+            {(error || errors.general) && (
+              <div className="error-message" style={{ color: '#ef4444', fontSize: '14px', marginBottom: '12px' }}>
+                {errors.general || error}
+              </div>
+            )}
+
+            <div className="auth-row">
+              <label className="check">
+                <input 
+                  type="checkbox" 
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                <span>Remember me</span>
+              </label>
+              <Link to="/forgot-password" className="muted-link">Forgot password?</Link>
+            </div>
+
+            <button 
+              className={`btn btn-primary auth-submit ${!isFormValid() || loading ? 'disabled' : ''}`}
+              type="submit" 
+              disabled={!isFormValid() || loading}
+            >
+              {/* Loading spinner */}
+              {loading ? <span className="loading-spinner" /> : <i className="fa-solid fa-right-to-bracket" aria-hidden="true"></i>}
+              <span>{loading ? 'Signing in…' : 'Sign in'}</span>
+            </button>
+          </form>
+
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+
+          <div className="social-btns">
+            <button 
+              className="btn btn-ghost" 
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              type="button"
+            >
+              <i className="fa-brands fa-google"></i>
+              <span>Continue with Google</span>
+            </button>
+            <button 
+              className="btn btn-ghost" 
+              onClick={handleGitHubSignIn}
+              disabled={loading}
+              type="button"
+            >
+              <i className="fa-brands fa-github"></i>
+              <span>Continue with GitHub</span>
+            </button>
+          </div>
+
+          <p className="auth-footer">Don't have an account? <Link to="/sign-up" className="link">Create one</Link></p>
+        </div>
+      </div>
+    </section>
+  )
+}
